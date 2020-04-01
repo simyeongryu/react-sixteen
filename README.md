@@ -1,68 +1,109 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Sixteen
 
-## Available Scripts
+# #1 Project Setup
 
-In the project directory, you can run:
+```shell
+$ yarn create react-app
+```
 
-### `yarn start`
+# #2 Return Types Strings and Fragments
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+16이전 return은 하나의 components 아니면 null
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+여러 개를 return 하고자 한다면,
 
-### `yarn test`
+배열을 사용하거나
+```js
+// 하나가 아니라 두 개 이상을 리턴하고 싶다면?
+// 16 이전엔 배열을 사용하거나 <span>을 이용했다.
+class ReturnTypes extends React.Component {
+  render = () => {
+    return [
+      <header key={1}></header>,
+      <div key={2}></div>,
+      <footer key={3}></footer>
+    ];
+  };
+}
+```
+`<span>`을 사용했다.
+```js
+class ReturnTypes extends React.Component {
+  render = () => {
+    return (
+      <span>
+        <header></header>
+        <div></div>
+        <footer></footer>
+      </span>
+    );
+  };
+}
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+16 버전 이후에는 Fragment를 사용하면 된다.
 
-### `yarn build`
+```js
+import React, { Component, Fragment } from "react";
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// 하나가 아니라 두 개 이상을 리턴하고 싶다면?
+// 16 이전엔 배열을 사용하거나 <span>을 이용했다.
+class ReturnTypes extends Component {
+  render = () => {
+    return (
+      <Fragment>
+        <header></header>
+        <div></div>
+        <footer></footer>
+      </Fragment>
+    );
+  };
+}
+```
+혹은
+```js
+import React, { Component, Fragment } from "react";
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+// 하나가 아니라 두 개 이상을 리턴하고 싶다면?
+// 16 이전엔 배열을 사용하거나 <span>을 이용했다.
+class ReturnTypes extends Component {
+  render = () => {
+    return (
+      <>
+        <header></header>
+        <div></div>
+        <footer></footer>
+      </>
+    );
+  };
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+그리고 이제 String도 return 할 수 있다.
 
-### `yarn eject`
+```js
+import React, { Component, Fragment } from "react";
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+// 하나가 아니라 두 개 이상을 return 하고 싶다면 Fragment를 사용한다.
+class ReturnTypes extends Component {
+  render = () => {
+    return "Hello WOW";
+  };
+}
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+class App extends Component {
+  render = () => {
+    return (
+      <>
+        <ReturnTypes />
+        <ReturnTypes />
+        <ReturnTypes />
+        <ReturnTypes />
+        <ReturnTypes />
+      </>
+    );
+  };
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+export default App;
+```
